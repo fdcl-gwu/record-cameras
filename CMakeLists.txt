@@ -1,20 +1,35 @@
 cmake_minimum_required(VERSION 2.4)
 project(record_cameras)
 
+
 if(COMMAND cmake_policy)
     cmake_policy(SET CMP0003 OLD)
     cmake_policy(SET CMP0015 OLD)
 endif(COMMAND cmake_policy)
 
-set (CMAKE_CXX_STANDARD 11)
-find_package(OpenCV REQUIRED)
 
+set (CMAKE_CXX_STANDARD 11)
+find_package (PkgConfig REQUIRED)
+
+
+find_package(OpenCV REQUIRED)
 include_directories(${OPENCV_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
 link_directories(${OpenCV_LIBRARY_DIRS})
 
+
+pkg_check_modules (GTK3 gtk+-3.0)
+include_directories (${GTK3_INCLUDE_DIRS})
+link_directories (${GTK3_LIBRARY_DIRS})
+add_definitions (${GTK3_CFLAGS_OTHER})
+
+
+link_directories("/usr/local/lib/")
+include_directories("/usr/local/include/")
+
+
 set(record_cameras_src
+    src/gui.cpp
     src/main.cpp
     )
 add_executable(record_cameras ${record_cameras_src})

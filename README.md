@@ -1,4 +1,32 @@
-## Installing OpenCV
+## Dependencies
+
+### CMake
+On Linux:
+```
+sudo apt-get install build-essential pkg-config cmake
+```
+
+On Mac:
+```
+brew install cmake
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+```
+
+
+### Glade
+Glade is used for the GUI. On Linux:
+```
+sudo apt-get install glade libgtk-3-dev
+```
+
+On Mac (with [Homebrew](https://brew.sh/) installed)
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+brew install gtk+3
+brew install glade
+```
+
+### OpenCV
 
 You can install the standalone ArUco library by downloading the source files which can be found in the above website and building and installing them.
 But it is highly recommended to install ArUco library packed in OpenCV library.
@@ -9,7 +37,7 @@ Building and installing OpenCV with the provided submodules guarantees that the 
 So it is recommended to install from the submodules.
 
 
-### Installing v3.4.2 (recommended)
+#### Installing v3.4.2 (recommended)
 ```
 sudo apt-get install build-essential
 sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
@@ -25,7 +53,7 @@ sudo make install
 ```
 
 
-### Installing the Latest
+#### Installing the Latest
 ```
 sudo apt-get install build-essential
 sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev

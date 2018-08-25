@@ -12,9 +12,6 @@ reated by https://www.gitignore.io/api/c,ros,tex,vim,c++,macos,latex,eagle,linux
 *.log.*
 *.sig
 
-pkg/
-src/
-
 ### C ###
 # Prerequisites
 *.d

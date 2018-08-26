@@ -16,7 +16,7 @@ Gui::~Gui()
 
 void Gui::init(void)
 {
-    window.set_default_size(400, 400);
+    window.set_default_size(400, 200);
     window.set_title("Record Cameras");
     
     // level 0
@@ -28,7 +28,7 @@ void Gui::init(void)
     // first child of vbox_main
     // contains the check buttons and labels for the camera data, and controls
     hbox_main = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
-    hbox_main->set_size_request(400, 300);
+    hbox_main->set_size_request(400, 200);
     vbox_main->pack_start(*hbox_main, Gtk::PACK_SHRINK, 0);
 
     // level 2
@@ -36,7 +36,7 @@ void Gui::init(void)
     // the contains the grid that holds check_buttons and the labels for camera
     // data
     grid_camera_data = Gtk::manage(new Gtk::Grid);
-    grid_camera_data->set_size_request(300, 300);
+    grid_camera_data->set_size_request(300, 200);
     grid_camera_data->set_border_width(2);
     hbox_main->add(*grid_camera_data);
     
@@ -64,7 +64,7 @@ void Gui::init(void)
     // second child of hbox_main
     // contains the controls
     vbox_controls = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-    vbox_controls->set_size_request(100, 300);
+    vbox_controls->set_size_request(100, 200);
     vbox_controls->set_border_width(2);
     hbox_main->add(*vbox_controls);
     vbox_controls->grab_focus();

@@ -5,22 +5,28 @@
 
 int main(int argc, char **argv)
 {
-    GUI GUI;
-    int wait_time = 10;
-    cv::VideoCapture in_video;
-    in_video.open(0);
+    GUI gui;
 
-    while (in_video.grab()) 
-    {
-        cv::Mat image, image_copy;
-        in_video.retrieve(image);
-        image.copyTo(image_copy);
+    Gtk::Main recorder(argc, argv);
+    recorder.run();
 
-        cv::imshow("Camers View", image_copy);
-        char key = (char) cv::waitKey(wait_time);
-        if (key == 27)
-            break;
-    }
+    // int wait_time = 10;
+    // cv::VideoCapture in_video;
+    // in_video.open(0);
+    //
+    // while (in_video.grab())
+    // {
+    //     cv::Mat image, image_copy;
+    //     in_video.retrieve(image);
+    //     image.copyTo(image_copy);
+    //
+    //     cv::imshow("Camers View", image_copy);
+    //     char key = (char) cv::waitKey(wait_time);
+    //     if (key == 27)
+    //         break;
+    // }
+    //
+    // in_video.release();
 
-    in_video.release();
+    return 0;
 }

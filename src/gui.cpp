@@ -12,7 +12,12 @@ GUI::~GUI(){}
 void GUI::init(void)
 {
     app = Gtk::Application::create();
+    GUI::build_from_glade();
+}
 
+
+void GUI::build_from_glade(void)
+{
     builder = Gtk::Builder::create();
     try
     {
@@ -32,3 +37,4 @@ void GUI::init(void)
     }
 
 }
+

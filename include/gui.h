@@ -17,6 +17,7 @@ public:
 
 private:
     void init(void);
+    void build_from_glade(void);
 };
 
 

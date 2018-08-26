@@ -16,13 +16,13 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 ### Glade
 Glade is used for the GUI. On Linux:
 ```
-sudo apt-get install glade libgtk-3-dev
+sudo apt-get install glade libgtkmm-3.0-dev
 ```
 
 On Mac (with [Homebrew](https://brew.sh/) installed)
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
-brew install gtk+3
+brew install gtkmm3
 brew install glade
 ```
 

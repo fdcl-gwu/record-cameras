@@ -18,10 +18,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 link_directories(${OpenCV_LIBRARY_DIRS})
 
 
-pkg_check_modules (GTK3 gtk+-3.0)
-include_directories (${GTK3_INCLUDE_DIRS})
-link_directories (${GTK3_LIBRARY_DIRS})
-add_definitions (${GTK3_CFLAGS_OTHER})
+pkg_check_modules(GTKMM gtkmm-3.0)
+link_directories(${GTKMM_LIBRARY_DIRS})
+include_directories(${GTKMM_INCLUDE_DIRS})
 
 
 link_directories("/usr/local/lib/")
@@ -35,6 +34,7 @@ set(record_cameras_src
 add_executable(record_cameras ${record_cameras_src})
 target_link_libraries(record_cameras
     ${OpenCV_LIBRARIES}
+    ${GTKMM_LIBRARIES}
     )
 
 target_compile_options(record_cameras

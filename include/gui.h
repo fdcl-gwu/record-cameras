@@ -1,6 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <iostream>
 #include <gtkmm.h>
 
 
@@ -11,6 +12,7 @@ public:
     ~GUI();
 
     Glib::RefPtr<Gtk::Application> app;
+    Glib::RefPtr<Gtk::Builder> builder;
 
 
 private:

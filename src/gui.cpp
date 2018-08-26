@@ -39,7 +39,27 @@ void Gui::init(void)
     grid_camera_data->set_size_request(300, 300);
     grid_camera_data->set_border_width(2);
     hbox_main->add(*grid_camera_data);
+    
+    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 0"));
+    checkbox_cam0->set_size_request(200, 30);
+    grid_camera_data->attach(*checkbox_cam0, 0, 0, 1, 1);
 
+    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 1"));
+    checkbox_cam0->set_size_request(200, 30);
+    grid_camera_data->attach(*checkbox_cam0, 0, 1, 1, 1);
+
+    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 2"));
+    checkbox_cam0->set_size_request(200, 30);
+    grid_camera_data->attach(*checkbox_cam0, 0, 2, 1, 1);
+    
+    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 3"));
+    checkbox_cam0->set_size_request(200, 30);
+    grid_camera_data->attach(*checkbox_cam0, 0, 3, 1, 1);
+  
+    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 4"));
+    checkbox_cam0->set_size_request(200, 30);
+    grid_camera_data->attach(*checkbox_cam0, 0, 4, 1, 1);
+    
     // level 2
     // second child of hbox_main
     // contains the controls
@@ -47,7 +67,11 @@ void Gui::init(void)
     vbox_controls->set_size_request(100, 300);
     vbox_controls->set_border_width(2);
     hbox_main->add(*vbox_controls);
-
+    vbox_controls->grab_focus();
+ 
+    // level 3
+    // first child of vbox_controls
+    // start/stop recording
     btn_record = Gtk::manage(new Gtk::Button("Record"));
     btn_record->set_size_request(100, 100);
     vbox_controls->pack_start(*btn_record, Gtk::PACK_SHRINK, 0);

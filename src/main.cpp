@@ -1,9 +1,11 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/aruco.hpp>
 
+#include "gui.h"
 
 int main(int argc, char **argv)
 {
+    GUI GUI;
     int wait_time = 10;
     cv::VideoCapture in_video;
     in_video.open(0);

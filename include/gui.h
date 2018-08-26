@@ -1,7 +1,21 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <gtk/gtk.h>
-#include <gtk/gtkmain.h>
+#include <gtkmm.h>
+
+
+class GUI
+{
+public:
+    GUI();
+    ~GUI();
+
+    Glib::RefPtr<Gtk::Application> app;
+
+
+private:
+    void init(void);
+};
+
 
 #endif

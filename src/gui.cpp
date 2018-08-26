@@ -21,13 +21,13 @@ void Gui::init(void)
     
     // level 0
     // main container (this contains hbox_main and the statusbar)
-    vbox_main = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    vbox_main = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 2));
     window.add(*vbox_main);
 
     // level 1
     // first child of vbox_main
     // contains the check buttons and labels for the camera data, and controls
-    hbox_main = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
+    hbox_main = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 2));
     hbox_main->set_size_request(400, 200);
     vbox_main->pack_start(*hbox_main, Gtk::PACK_SHRINK, 0);
 
@@ -79,7 +79,10 @@ void Gui::init(void)
     // level 1
     // second child of vbox_main
     // TODO: add status bar
-    
+   
+    vbox_main->set_focus_child(*hbox_main);
+    hbox_main->set_focus_child(*vbox_controls);
+    vbox_controls->set_focus_child(*btn_record);
     vbox_main->show_all();
 }
 

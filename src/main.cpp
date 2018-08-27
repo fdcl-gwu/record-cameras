@@ -1,23 +1,22 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <thread>
+#include <unistd.h>
 
 #include "gui.h"
+#include "types.h"
 
-struct Args
-{
-    int argc;
-    char **argv;
-};
+
+System SYS;
 
 
 void thread_gui(Args args)
 {
     std::cout << "GUI: starting thread .." << std::endl;
     
-    auto app = Gtk::Application::create(args.argc, args.argv, 
+    auto app = Gtk::Application::create(SYS.argc, SYS.argv, 
             "com.github.fdcl-gwu");
-    Gui gui;
+    Gui gui(SYS);
     app->run(gui.window);
 
     std::cout << "GUI: thread closed!" << std::endl;
@@ -27,7 +26,10 @@ void thread_gui(Args args)
 void thread_camera(void)
 {
     std::cout << "CAM: starting thread .." << std::endl;
-    
+    while(SYS.on)
+    {
+        usleep(10);
+    }
     std::cout << "CAM: thread closed!" << std::endl;
 }
 
@@ -35,9 +37,12 @@ void thread_camera(void)
 
 int main(int argc, char *argv[]) 
 {
+    // System SYS;
     Args args;
     args.argc = argc;
     args.argv = argv;
+
+    SYS.on = true;
 
     std::thread t1(thread_gui, args);
     std::thread t2(thread_camera);

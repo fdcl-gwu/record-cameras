@@ -4,6 +4,8 @@
 #include <iostream>
 #include <gtkmm.h>
 
+#include "types.h"
+
 
 class Gui
 {
@@ -17,7 +19,10 @@ public:
     Gtk::CheckButton *checkbox_cam0, *checkbox_cam1, *checkbox_cam2,
         *checkbox_cam3, *checkbox_cam4;
 
-    Gui();
+    System &SYS;
+    Gui(
+            System &SYS_IN
+        );
     ~Gui();
 
 private:

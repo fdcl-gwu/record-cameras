@@ -1,16 +1,18 @@
 #include "gui.h"
+#include "types.h"
 
 
-
-Gui::Gui()
+Gui::Gui(System &SYS_IN) : SYS(SYS_IN)
 {
+    SYS = SYS_IN;
     Gui::init();
 }
 
 
 Gui::~Gui()
 {
-    ; // do nothing
+    std::cout << "GUI: setting system off .." << std::endl;
+    SYS.on = false;
 }
 
 

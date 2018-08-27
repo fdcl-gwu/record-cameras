@@ -6,16 +6,16 @@ struct System
 {
     bool on = true;
     bool record = false;
-    int camera_num = 0;
     int argc;
     char **argv;
 };
 
 
-struct Args
+struct Params
 {
     int argc;
     char **argv;
+    int cam_num = 0;
 };
 
 

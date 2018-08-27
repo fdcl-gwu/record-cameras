@@ -10,7 +10,7 @@
 System SYS;
 
 
-void thread_gui(Args args)
+void thread_gui(Params params)
 {
     std::cout << "GUI: starting thread .." << std::endl;
     
@@ -23,9 +23,10 @@ void thread_gui(Args args)
 }
 
 
-void thread_camera(void)
+void thread_camera(Params params)
 {
-    std::cout << "CAM: starting thread .." << std::endl;
+    std::cout << "CAM" << params.cam_num << ": starting thread .." 
+              << std::endl;
     while(SYS.on)
     {
         usleep(10);
@@ -37,15 +38,14 @@ void thread_camera(void)
 
 int main(int argc, char *argv[]) 
 {
-    // System SYS;
-    Args args;
-    args.argc = argc;
-    args.argv = argv;
+    Params params;
+    params.argc = argc;
+    params.argv = argv;
 
     SYS.on = true;
 
-    std::thread t1(thread_gui, args);
-    std::thread t2(thread_camera);
+    std::thread t1(thread_gui, params);
+    std::thread t2(thread_camera, params);
 
     t1.join();
     t2.join();

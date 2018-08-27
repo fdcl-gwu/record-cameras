@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "gui.h"
+#include "camera.h"
 #include "types.h"
 
 
@@ -38,6 +39,8 @@ void thread_camera(Params params)
 {
     std::cout << get_time() << "CAM" << params.cam_num << ": starting thread .."
               << std::endl;
+
+    Camera CAM(params.cam_num, SYS);
     while(SYS.on)
     {
         usleep(10);

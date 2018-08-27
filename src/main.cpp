@@ -1,16 +1,51 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <thread>
 
 #include "gui.h"
 
+struct Args
+{
+    int argc;
+    char **argv;
+};
 
 
-int main(int argc, char *argv[]) {
-    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
-    std::cout << "Main" << std::endl;
+void thread_gui(Args args)
+{
+    std::cout << "GUI: starting thread .." << std::endl;
+    
+    auto app = Gtk::Application::create(args.argc, args.argv, 
+            "com.github.fdcl-gwu");
     Gui gui;
     app->run(gui.window);
-    std::cout << "Ending program" << std::endl;
+
+    std::cout << "GUI: thread closed!" << std::endl;
+}
+
+
+void thread_camera(void)
+{
+    std::cout << "CAM: starting thread .." << std::endl;
+    
+    std::cout << "CAM: thread closed!" << std::endl;
+}
+
+
+
+int main(int argc, char *argv[]) 
+{
+    Args args;
+    args.argc = argc;
+    args.argv = argv;
+
+    std::thread t1(thread_gui, args);
+    std::thread t2(thread_camera);
+
+    t1.join();
+    t2.join();
+
+    std::cout << "Program closed!" << std::endl;
     return 0;
 }
 

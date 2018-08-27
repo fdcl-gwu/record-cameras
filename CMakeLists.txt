@@ -11,6 +11,9 @@ endif(COMMAND cmake_policy)
 set (CMAKE_CXX_STANDARD 11)
 find_package (PkgConfig REQUIRED)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 
 find_package(OpenCV REQUIRED)
 include_directories(${OPENCV_INCLUDE_DIRS})
@@ -36,8 +39,9 @@ add_executable(record_cameras ${record_cameras_src})
 target_link_libraries(record_cameras
     ${OpenCV_LIBRARIES}
     ${GTKMM_LIBRARIES}
+    Threads::Threads
     )
 
 target_compile_options(record_cameras
-    PRIVATE -O3 -std=c++11
+    PRIVATE -O3 -std=c++11 -pthread
     )

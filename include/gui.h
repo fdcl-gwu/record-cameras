@@ -2,7 +2,9 @@
 #define GUI_H
 
 #include <iostream>
+#include <chrono>
 #include <gtkmm.h>
+#include <string>
 
 #include "types.h"
 
@@ -29,6 +31,9 @@ private:
     void init(void);
     void on_btn_record_clicked(void);
 
+    std::string get_time(void);
+    std::string get_file_name(int cam_num);
+    std::string t_now;
     unsigned int context_id;
 };
 

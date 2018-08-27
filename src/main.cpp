@@ -10,28 +10,40 @@
 System SYS;
 
 
+std::string get_time(void)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char start_time[80];
+    tstruct = *localtime(&now);
+    strftime(start_time, sizeof(start_time), "%H%M%S: ", &tstruct);
+    
+    return std::string(start_time);
+}
+
+
 void thread_gui(Params params)
 {
-    std::cout << "GUI: starting thread .." << std::endl;
+    std::cout << get_time() <<  "GUI: starting thread .." << std::endl;
     
     auto app = Gtk::Application::create(SYS.argc, SYS.argv, 
             "com.github.fdcl-gwu");
     Gui gui(SYS);
     app->run(gui.window);
 
-    std::cout << "GUI: thread closed!" << std::endl;
+    std::cout << get_time() << "GUI: thread closed!" << std::endl;
 }
 
 
 void thread_camera(Params params)
 {
-    std::cout << "CAM" << params.cam_num << ": starting thread .." 
+    std::cout << get_time() << "CAM" << params.cam_num << ": starting thread .." 
               << std::endl;
     while(SYS.on)
     {
         usleep(10);
     }
-    std::cout << "CAM: thread closed!" << std::endl;
+    std::cout << get_time() << "CAM: thread closed!" << std::endl;
 }
 
 
@@ -50,7 +62,7 @@ int main(int argc, char *argv[])
     t1.join();
     t2.join();
 
-    std::cout << "Program closed!" << std::endl;
+    std::cout << get_time() << "Program closed!" << std::endl;
     return 0;
 }
 

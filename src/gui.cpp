@@ -22,15 +22,46 @@ void Gui::on_btn_record_clicked(void)
     {
         SYS.record = false;
         btn_record->set_label("Record");
+        std::cout << get_time() << "recording stopped" << std::endl;
         statusbar->push("Recording stopped", context_id);
     }
     else
     {
         SYS.record = true;
         btn_record->set_label("Stop");
+        std::cout << get_time() << "recording started" << std::endl;
         statusbar->push("Recording started", context_id);
     }
 }
+
+
+std::string Gui::get_time(void)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char start_time[80];
+    tstruct = *localtime(&now);
+    strftime(start_time, sizeof(start_time), "%H%M%S: ", &tstruct);
+    
+    return std::string(start_time);
+}
+
+
+std::string Gui::get_file_name(int cam_num)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char start_time[80];
+    tstruct = *localtime(&now);
+    strftime(start_time, sizeof(start_time), "%Y%m%d_%H%M%S", &tstruct);
+    
+    char t_now_char[256];
+    sprintf(t_now_char, "%s_cam_%d", start_time, cam_num);
+
+    return std::string(t_now_char);
+}
+
+
 
 void Gui::init(void)
 {

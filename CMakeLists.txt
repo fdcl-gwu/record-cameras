@@ -33,6 +33,7 @@ include_directories("/usr/local/include/")
 set(record_cameras_src
     src/gui.cpp
     src/main.cpp
+    src/camera.cpp
     #src/test.cpp
     )
 add_executable(record_cameras ${record_cameras_src})

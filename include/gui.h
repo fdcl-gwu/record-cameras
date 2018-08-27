@@ -24,7 +24,7 @@ public:
     System &SYS;
     Gui(
             System &SYS_IN
-        );
+    );
     ~Gui();
 
 private:

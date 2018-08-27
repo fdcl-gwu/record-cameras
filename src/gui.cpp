@@ -1,10 +1,8 @@
 #include "gui.h"
-#include "types.h"
 
 
 Gui::Gui(System &SYS_IN) : SYS(SYS_IN)
 {
-    SYS = SYS_IN;
     Gui::init();
 }
 

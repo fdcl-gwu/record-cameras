@@ -22,11 +22,13 @@ void Gui::on_btn_record_clicked(void)
     {
         SYS.record = false;
         btn_record->set_label("Record");
+        statusbar->push("Recording stopped", context_id);
     }
     else
     {
         SYS.record = true;
         btn_record->set_label("Stop");
+        statusbar->push("Recording started", context_id);
     }
 }
 
@@ -96,8 +98,13 @@ void Gui::init(void)
 
     // level 1
     // second child of vbox_main
-    // TODO: add status bar
-   
+    // status bar
+    statusbar = Gtk::manage(new Gtk::Statusbar);
+    vbox_main->add(*statusbar); 
+    context_id = statusbar->get_context_id("");
+    statusbar->push("Click Record to start recording", context_id);
+    context_id++;
+
     vbox_main->set_focus_child(*hbox_main);
     hbox_main->set_focus_child(*vbox_controls);
     vbox_controls->set_focus_child(*btn_record);

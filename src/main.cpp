@@ -17,7 +17,7 @@ std::string get_time(void)
     char start_time[80];
     tstruct = *localtime(&now);
     strftime(start_time, sizeof(start_time), "%H%M%S: ", &tstruct);
-    
+
     return std::string(start_time);
 }
 
@@ -25,8 +25,8 @@ std::string get_time(void)
 void thread_gui(Params params)
 {
     std::cout << get_time() <<  "GUI: starting thread .." << std::endl;
-    
-    auto app = Gtk::Application::create(SYS.argc, SYS.argv, 
+
+    auto app = Gtk::Application::create(SYS.argc, SYS.argv,
             "com.github.fdcl-gwu");
     Gui gui(SYS);
     app->run(gui.window);
@@ -37,7 +37,7 @@ void thread_gui(Params params)
 
 void thread_camera(Params params)
 {
-    std::cout << get_time() << "CAM" << params.cam_num << ": starting thread .." 
+    std::cout << get_time() << "CAM" << params.cam_num << ": starting thread .."
               << std::endl;
     while(SYS.on)
     {
@@ -48,7 +48,7 @@ void thread_camera(Params params)
 
 
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
     Params params;
     params.argc = argc;
@@ -56,13 +56,22 @@ int main(int argc, char *argv[])
 
     SYS.on = true;
 
+    std::cout << get_time() << "starting threads .." << std::endl;
     std::thread t1(thread_gui, params);
-    std::thread t2(thread_camera, params);
+    params.cam_num = 0; std::thread t2(thread_camera, params);
+    params.cam_num = 1; std::thread t3(thread_camera, params);
+    params.cam_num = 2; std::thread t4(thread_camera, params);
+    params.cam_num = 3; std::thread t5(thread_camera, params);
+    params.cam_num = 4; std::thread t6(thread_camera, params);
 
     t1.join();
     t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
+    t6.join();
 
-    std::cout << get_time() << "Program closed!" << std::endl;
+    std::cout << get_time() << "program closed!" << std::endl;
     return 0;
 }
 

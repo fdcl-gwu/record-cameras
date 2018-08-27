@@ -27,7 +27,7 @@ public:
 
 private:
     void init(void);
-
+    void on_btn_record_clicked(void);
 };
 
 

@@ -16,6 +16,20 @@ Gui::~Gui()
 }
 
 
+void Gui::on_btn_record_clicked(void)
+{
+    if (SYS.record)
+    {
+        SYS.record = false;
+        btn_record->set_label("Record");
+    }
+    else
+    {
+        SYS.record = true;
+        btn_record->set_label("Stop");
+    }
+}
+
 void Gui::init(void)
 {
     window.set_default_size(400, 200);
@@ -76,6 +90,8 @@ void Gui::init(void)
     // start/stop recording
     btn_record = Gtk::manage(new Gtk::Button("Record"));
     btn_record->set_size_request(100, 100);
+    btn_record->signal_clicked().connect(sigc::mem_fun(*this, 
+                &Gui::on_btn_record_clicked));
     vbox_controls->pack_start(*btn_record, Gtk::PACK_SHRINK, 0);
 
     // level 1

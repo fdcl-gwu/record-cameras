@@ -59,16 +59,16 @@ void Camera::loop(void)
 
 void Camera::show_image(void)
 {
-    while (true)
+    while (SYS.on)
     {
         cap >> image_in;
         if (image_in.empty()) break;
 
         image_in.copyTo(image);
         // cv::imshow(Camera::title, image);
-        cv::imshow("C", image);
-                
-        char key = (char) cv::waitKey(10);
-        if (key == 27) break;
+        // cv::imshow("C", image);
+        //
+        // char key = (char) cv::waitKey(10);
+        // if (key == 27) break;
     }
 }

@@ -48,6 +48,18 @@ std::string Gui::get_file_name(int cam_num)
 }
 
 
+bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+{
+    if (!m_image)
+        return false;
+
+    // Gtk::Allocation allocation = get_allocation();
+    // const int width = allocation.get_width();
+    // const int height = allocation.get_height();
+    return true;
+}
+
+
 
 void Gui::init(void)
 {
@@ -112,6 +124,11 @@ void Gui::init(void)
     btn_record->signal_clicked().connect(sigc::mem_fun(*this,
                 &Gui::on_btn_record_clicked));
     vbox_controls->pack_start(*btn_record, Gtk::PACK_SHRINK, 0);
+
+
+    draw_cam0 = Gtk::manage(new Gtk::DrawingArea);
+    draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw));
+    hbox_main->add(*draw_cam0);
 
     // level 1
     // second child of vbox_main

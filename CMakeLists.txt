@@ -34,7 +34,7 @@ set(record_cameras_src
     src/gui.cpp
     src/main.cpp
     src/camera.cpp
-    #src/test.cpp
+    src/common_funcs.cpp
     )
 add_executable(record_cameras ${record_cameras_src})
 target_link_libraries(record_cameras

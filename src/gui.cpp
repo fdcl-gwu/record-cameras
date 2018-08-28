@@ -9,8 +9,7 @@ Gui::Gui(System &SYS_IN) : SYS(SYS_IN)
 
 Gui::~Gui()
 {
-    std::cout << Gui::get_time() << "GUI: setting system off .."
-              << std::endl;
+    std::cout << "GUI: setting system off .." << std::endl;
     SYS.on = false;
 }
 
@@ -31,18 +30,6 @@ void Gui::on_btn_record_clicked(void)
         std::cout << get_time() << "recording started" << std::endl;
         statusbar->push("Recording started", context_id);
     }
-}
-
-
-std::string Gui::get_time(void)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char start_time[80];
-    tstruct = *localtime(&now);
-    strftime(start_time, sizeof(start_time), "%H%M%S: ", &tstruct);
-
-    return std::string(start_time);
 }
 
 

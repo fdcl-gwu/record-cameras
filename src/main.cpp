@@ -10,18 +10,6 @@
 System SYS;
 
 
-std::string get_time(void)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char start_time[80];
-    tstruct = *localtime(&now);
-    strftime(start_time, sizeof(start_time), "%H%M%S: ", &tstruct);
-
-    return std::string(start_time);
-}
-
-
 void thread_gui(Params params)
 {
     std::cout << get_time() <<  "GUI: starting thread .." << std::endl;

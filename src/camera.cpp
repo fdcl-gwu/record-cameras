@@ -22,13 +22,11 @@ void Camera::sleep(void)
 
 void Camera::init(void)
 {
-    cv::VideoCapture cap(cam_num);
+    title << "Camera " << cam_num;
 
     try
     {
-        int ret = cap.isOpened();
-        std::cout << ret << cap.isOpened();
-
+        cap.open(cam_num);
         if (cap.isOpened()) 
         {
             camera_detected = true;
@@ -50,10 +48,27 @@ void Camera::loop(void)
 {
     if (camera_detected)
     {
-        ;
+        Camera::show_image();
     }
     else
     {
         Camera::sleep();
+    }
+}
+
+
+void Camera::show_image(void)
+{
+    while (true)
+    {
+        cap >> image_in;
+        if (image_in.empty()) break;
+
+        image_in.copyTo(image);
+        // cv::imshow(Camera::title, image);
+        cv::imshow("C", image);
+                
+        char key = (char) cv::waitKey(10);
+        if (key == 27) break;
     }
 }

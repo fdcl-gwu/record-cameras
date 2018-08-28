@@ -6,7 +6,6 @@
 #include "camera.h"
 #include "types.h"
 
-
 System SYS;
 
 
@@ -31,7 +30,7 @@ void thread_camera(Params params)
     Camera CAM(params.cam_num, SYS);
     while(SYS.on)
     {
-        usleep(10);
+        CAM.loop();
     }
     std::cout << get_time() << "CAM: thread closed!" << std::endl;
 }

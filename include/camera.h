@@ -12,6 +12,7 @@ public:
     System &SYS;
     int cam_num;
     bool camera_detected = false;
+    cv::VideoCapture cap;
 
     Camera(
         int cam_num_in,
@@ -24,6 +25,9 @@ public:
 
 private:
     void init(void);
+    std::stringstream title;
+    cv::Mat image, image_in;
+    void show_image(void);
 };
 
 #endif

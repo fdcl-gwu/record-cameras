@@ -23,13 +23,20 @@ void Camera::sleep(void)
 void Camera::init(void)
 {
     cv::VideoCapture cap(cam_num);
-    if (cap.isOpened()) 
+
+    try
     {
-        camera_detected = true;
-        std::cout << get_time() << "CAM" << cam_num << ": camera detected"
-                  << std::endl;
+        int ret = cap.isOpened();
+        std::cout << ret << cap.isOpened();
+
+        if (cap.isOpened()) 
+        {
+            camera_detected = true;
+            std::cout << get_time() << "CAM" << cam_num << ": camera detected"
+                      << std::endl;
+        }
     }
-    else 
+    catch(...)
     {
         camera_detected = false;
         std::cout << get_time() << "CAM" << cam_num << ": camera not detected"

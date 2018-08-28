@@ -136,7 +136,7 @@ void Gui::init(void)
 
     draw_cam0 = Gtk::manage(new Gtk::DrawingArea);
     draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw));
-    draw_cam0->set_size_request(100, 100);
+    draw_cam0->set_size_request(640, 480);
     hbox_main->add(*draw_cam0);
 
     // level 1

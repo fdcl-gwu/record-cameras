@@ -65,6 +65,9 @@ void Camera::show_image(void)
         if (image_in.empty()) break;
 
         image_in.copyTo(image);
+        
+        SYS.im_cam0 = image;
+
         // cv::imshow(Camera::title, image);
         // cv::imshow("C", image);
         //

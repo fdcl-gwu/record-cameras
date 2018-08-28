@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <opencv2/opencv.hpp>
+
 
 struct System
 {
@@ -8,6 +10,8 @@ struct System
     bool record = false;
     int argc;
     char **argv;
+
+    cv::Mat im_cam0;
 };
 
 

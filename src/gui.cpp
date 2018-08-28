@@ -50,12 +50,20 @@ std::string Gui::get_file_name(int cam_num)
 
 bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-    if (!m_image)
-        return false;
+    cv::Mat mat1 = SYS.im_cam0;
+    // if (!mat1)
+        // return false;
 
     // Gtk::Allocation allocation = get_allocation();
     // const int width = allocation.get_width();
     // const int height = allocation.get_height();
+    std::cout << mat1.cols << " " << mat1.rows << std::endl;
+    if (mat1.cols < 1) return false;
+
+    Gdk::Cairo::set_source_pixbuf (cr, 
+            Gdk::Pixbuf::create_from_data(mat1.data, Gdk::COLORSPACE_RGB, 
+                false, 8, mat1.cols, mat1.rows, mat1.step));
+    cr->paint();
     return true;
 }
 
@@ -128,6 +136,7 @@ void Gui::init(void)
 
     draw_cam0 = Gtk::manage(new Gtk::DrawingArea);
     draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw));
+    draw_cam0->set_size_request(100, 100);
     hbox_main->add(*draw_cam0);
 
     // level 1

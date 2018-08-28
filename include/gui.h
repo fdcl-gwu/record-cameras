@@ -4,7 +4,7 @@
 #include <iostream>
 #include <gtkmm.h>
 #include <string>
-
+#include <opencv2/opencv.hpp>
 
 #include <cairomm/context.h>
 #include <giomm/resource.h>

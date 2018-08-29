@@ -38,6 +38,7 @@ public:
 private:
     void init(void);
     void on_btn_record_clicked(void);
+    bool on_timeout(void);
 
     std::string get_file_name(int cam_num);
     std::string t_now;

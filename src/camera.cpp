@@ -62,16 +62,9 @@ void Camera::show_image(void)
     while (SYS.on)
     {
         cap >> image_in;
-        if (image_in.empty()) break;
+        if (image_in.empty()) continue;
 
-        image_in.copyTo(image);
-        
+        cv::cvtColor(image_in, image, CV_BGR2RGB);
         SYS.im_cam0 = image;
-
-        // cv::imshow(Camera::title, image);
-        // cv::imshow("C", image);
-        //
-        // char key = (char) cv::waitKey(10);
-        // if (key == 27) break;
     }
 }

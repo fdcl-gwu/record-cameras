@@ -51,19 +51,23 @@ std::string Gui::get_file_name(int cam_num)
 bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     cv::Mat mat1 = SYS.im_cam0;
-    // if (!mat1)
-        // return false;
-
-    // Gtk::Allocation allocation = get_allocation();
-    // const int width = allocation.get_width();
-    // const int height = allocation.get_height();
-    std::cout << mat1.cols << " " << mat1.rows << std::endl;
     if (mat1.cols < 1) return false;
 
     Gdk::Cairo::set_source_pixbuf (cr, 
             Gdk::Pixbuf::create_from_data(mat1.data, Gdk::COLORSPACE_RGB, 
                 false, 8, mat1.cols, mat1.rows, mat1.step));
     cr->paint();
+    
+    return true;
+}
+
+
+bool Gui::on_timeout(void)
+{
+    int h, w;
+    Gui::draw_cam0->get_size_request(h, w);
+    if (h == 641) Gui::draw_cam0->set_size_request(640, 480);
+    else Gui::draw_cam0->set_size_request(641, 480);
     return true;
 }
 
@@ -147,6 +151,10 @@ void Gui::init(void)
     context_id = statusbar->get_context_id("");
     statusbar->push("Click Record to start recording", context_id);
     context_id++;
+
+    int timeout_value = 40; //in ms 
+    sigc::slot<bool>my_slot = sigc::mem_fun(*this, &Gui::on_timeout);
+    Glib::signal_timeout().connect(my_slot, timeout_value);
 
     vbox_main->set_focus_child(*hbox_main);
     hbox_main->set_focus_child(*vbox_controls);

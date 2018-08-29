@@ -32,6 +32,7 @@ private:
     void show_image(void);
     bool recording = false;
     bool open_new_file = true;
+    std::string get_file_name(int cam_num);
 };
 
 #endif

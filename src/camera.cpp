@@ -74,10 +74,9 @@ void Camera::show_image(void)
         {
             if (open_new_file)
             {
-                std::ostringstream file_name;
-                file_name <<  "cam" << cam_num << ".avi";
-                video_out.open(file_name.str(), CV_FOURCC('M','J','P','G'), fps_in,
-                    cv::Size(frame_width, frame_height), true);
+                std::string file_name = Camera::get_file_name(cam_num);
+                video_out.open(file_name, CV_FOURCC('M','J','P','G'),
+                    fps_in, cv::Size(frame_width, frame_height), true);
                 open_new_file = false;
             }
             recording = true;
@@ -93,4 +92,19 @@ void Camera::show_image(void)
             }
         }
     }
+}
+
+
+std::string Camera::get_file_name(int cam_num)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char start_time[80];
+    tstruct = *localtime(&now);
+    strftime(start_time, sizeof(start_time), "%Y%m%d_%H%M%S", &tstruct);
+
+    char t_now_char[256];
+    sprintf(t_now_char, "%s_cam_%d.avi", start_time, cam_num);
+
+    return std::string(t_now_char);
 }

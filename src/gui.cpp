@@ -9,7 +9,8 @@ Gui::Gui(System &SYS_IN) : SYS(SYS_IN)
 
 Gui::~Gui()
 {
-    std::cout << "GUI: setting system off .." << std::endl;
+    std::cout << get_time() << " GUI: setting system off .."
+              << std::endl;
     SYS.on = false;
 }
 
@@ -33,31 +34,16 @@ void Gui::on_btn_record_clicked(void)
 }
 
 
-std::string Gui::get_file_name(int cam_num)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char start_time[80];
-    tstruct = *localtime(&now);
-    strftime(start_time, sizeof(start_time), "%Y%m%d_%H%M%S", &tstruct);
-
-    char t_now_char[256];
-    sprintf(t_now_char, "%s_cam_%d", start_time, cam_num);
-
-    return std::string(t_now_char);
-}
-
-
 bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     cv::Mat mat1 = SYS.im_cam0;
     if (mat1.cols < 1) return false;
 
-    Gdk::Cairo::set_source_pixbuf (cr, 
-            Gdk::Pixbuf::create_from_data(mat1.data, Gdk::COLORSPACE_RGB, 
+    Gdk::Cairo::set_source_pixbuf (cr,
+            Gdk::Pixbuf::create_from_data(mat1.data, Gdk::COLORSPACE_RGB,
                 false, 8, mat1.cols, mat1.rows, mat1.step));
     cr->paint();
-    
+
     return true;
 }
 
@@ -152,7 +138,7 @@ void Gui::init(void)
     statusbar->push("Click Record to start recording", context_id);
     context_id++;
 
-    int timeout_value = 40; //in ms 
+    int timeout_value = 40; //in ms
     sigc::slot<bool>my_slot = sigc::mem_fun(*this, &Gui::on_timeout);
     Glib::signal_timeout().connect(my_slot, timeout_value);
 

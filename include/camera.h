@@ -30,6 +30,8 @@ private:
     std::stringstream title;
     cv::Mat image, image_in;
     void show_image(void);
+    bool recording = false;
+    bool open_new_file = true;
 };
 
 #endif

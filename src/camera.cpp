@@ -35,8 +35,6 @@ void Camera::init(void)
             frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
             frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
             fps_in = cap.get(CV_CAP_PROP_FPS);
-            video_out.open("out.avi", CV_FOURCC('M','J','P','G'), fps_in,
-                cv::Size(frame_width, frame_height), true);
         }
     }
     catch(...)
@@ -71,6 +69,28 @@ void Camera::show_image(void)
 
         cv::cvtColor(image_in, image, CV_BGR2RGB);
         SYS.im_cam0 = image;
-        video_out.write(image_in);
+
+        if (SYS.record)
+        {
+            if (open_new_file)
+            {
+                std::ostringstream file_name;
+                file_name <<  "cam" << cam_num << ".avi";
+                video_out.open(file_name.str(), CV_FOURCC('M','J','P','G'), fps_in,
+                    cv::Size(frame_width, frame_height), true);
+                open_new_file = false;
+            }
+            recording = true;
+            video_out.write(image_in);
+        }
+        else
+        {
+            if (recording)
+            {
+                recording = false;
+                video_out.release();
+                open_new_file = true;
+            }
+        }
     }
 }

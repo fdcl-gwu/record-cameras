@@ -27,11 +27,16 @@ void Camera::init(void)
     try
     {
         cap.open(cam_num);
-        if (cap.isOpened()) 
+        if (cap.isOpened())
         {
             camera_detected = true;
             std::cout << get_time() << "CAM" << cam_num << ": camera detected"
                       << std::endl;
+            frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+            frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+            fps_in = cap.get(CV_CAP_PROP_FPS);
+            video_out.open("out.avi", CV_FOURCC('M','J','P','G'), fps_in,
+                cv::Size(frame_width, frame_height), true);
         }
     }
     catch(...)
@@ -66,5 +71,6 @@ void Camera::show_image(void)
 
         cv::cvtColor(image_in, image, CV_BGR2RGB);
         SYS.im_cam0 = image;
+        video_out.write(image_in);
     }
 }

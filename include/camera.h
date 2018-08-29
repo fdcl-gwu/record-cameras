@@ -13,6 +13,8 @@ public:
     int cam_num;
     bool camera_detected = false;
     cv::VideoCapture cap;
+    int frame_width, frame_height, fps_in;
+    cv::VideoWriter video_out;
 
     Camera(
         int cam_num_in,

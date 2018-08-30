@@ -153,13 +153,14 @@ void Gui::init(void)
     vbox_controls->set_focus_child(*btn_record);
     vbox_main->show_all();
 
-    usleep(1e6);
     Gui::refresh_camera_check_boxes();
 }
 
 
 void Gui::refresh_camera_check_boxes(void)
 {
+    SYS.refresh_cameras = true;
+    usleep(1e6);
     if (SYS.camera_detected[0]) checkbox_cam0->set_sensitive(true);
     else checkbox_cam0->set_sensitive(false);
 
@@ -175,17 +176,17 @@ void Gui::on_cam0_toggled(void)
 {
     if(checkbox_cam0->get_active())
     {
-        if (SYS.cam1_on && SYS.cam2_on)
+        if (SYS.camera_on[1] && SYS.camera_on[2])
         {
             statusbar->push("Only two cameras at a time", context_id);
-            SYS.cam2_on = false;
+            SYS.camera_on[2] = false;
             checkbox_cam2->set_active(false);
         }
-        SYS.cam0_on = true;
+        SYS.camera_on[0] = true;
     }
     else
     {
-        SYS.cam0_on = false;
+        SYS.camera_on[0] = false;
     }
 }
 
@@ -194,17 +195,17 @@ void Gui::on_cam1_toggled(void)
 {
     if(checkbox_cam1->get_active())
     {
-        if (SYS.cam0_on && SYS.cam2_on)
+        if (SYS.camera_on[0] && SYS.camera_on[2])
         {
             statusbar->push("Only two cameras at a time", context_id);
-            SYS.cam2_on = false;
+            SYS.camera_on[2] = false;
             checkbox_cam2->set_active(false);
         }
-        SYS.cam1_on = true;
+        SYS.camera_on[1] = true;
     }
     else
     {
-        SYS.cam1_on = false;
+        SYS.camera_on[1] = false;
     }
 }
 
@@ -213,17 +214,17 @@ void Gui::on_cam2_toggled(void)
 {
     if(checkbox_cam2->get_active())
     {
-        if (SYS.cam0_on && SYS.cam1_on)
+        if (SYS.camera_on[0] && SYS.camera_on[1])
         {
             statusbar->push("Only two cameras at a time", context_id);
-            SYS.cam1_on = false;
+            SYS.camera_on[1] = false;
             checkbox_cam1->set_active(false);
         }
-        SYS.cam2_on = true;
+        SYS.camera_on[2] = true;
     }
     else
     {
-        SYS.cam2_on = false;
+        SYS.camera_on[2] = false;
     }
 }
 

@@ -32,6 +32,12 @@ void thread_camera(Params params)
     while(SYS.on)
     {
         CAM.loop();
+
+        if (SYS.refresh_cameras)
+        {
+            SYS.refresh_cameras = false;
+            CAM.init();
+        }
     }
     std::cout << get_time() << "CAM: thread closed!" << std::endl;
 }

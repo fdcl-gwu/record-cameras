@@ -24,9 +24,9 @@ public:
 
     void loop(void);
     void sleep(void);
+    void init(void);
 
 private:
-    void init(void);
     std::stringstream title;
     cv::Mat image, image_in;
     void show_image(void);

@@ -54,6 +54,7 @@ bool Gui::on_timeout(void)
     Gui::draw_cam0->get_size_request(h, w);
     if (h == 641) Gui::draw_cam0->set_size_request(640, 480);
     else Gui::draw_cam0->set_size_request(641, 480);
+
     return true;
 }
 
@@ -87,23 +88,18 @@ void Gui::init(void)
 
     checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 0"));
     checkbox_cam0->set_size_request(200, 30);
+    checkbox_cam0->set_sensitive(false);
     grid_camera_data->attach(*checkbox_cam0, 0, 0, 1, 1);
 
-    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 1"));
-    checkbox_cam0->set_size_request(200, 30);
-    grid_camera_data->attach(*checkbox_cam0, 0, 1, 1, 1);
+    checkbox_cam1 = Gtk::manage(new Gtk::CheckButton("camera 1"));
+    checkbox_cam1->set_size_request(200, 30);
+    checkbox_cam1->set_sensitive(false);
+    grid_camera_data->attach(*checkbox_cam1, 0, 1, 1, 1);
 
-    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 2"));
-    checkbox_cam0->set_size_request(200, 30);
-    grid_camera_data->attach(*checkbox_cam0, 0, 2, 1, 1);
-
-    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 3"));
-    checkbox_cam0->set_size_request(200, 30);
-    grid_camera_data->attach(*checkbox_cam0, 0, 3, 1, 1);
-
-    checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 4"));
-    checkbox_cam0->set_size_request(200, 30);
-    grid_camera_data->attach(*checkbox_cam0, 0, 4, 1, 1);
+    checkbox_cam2 = Gtk::manage(new Gtk::CheckButton("camera 2"));
+    checkbox_cam2->set_size_request(200, 30);
+    checkbox_cam2->set_sensitive(false);
+    grid_camera_data->attach(*checkbox_cam2, 0, 2, 1, 1);
 
     // level 2
     // second child of hbox_main
@@ -146,4 +142,22 @@ void Gui::init(void)
     hbox_main->set_focus_child(*vbox_controls);
     vbox_controls->set_focus_child(*btn_record);
     vbox_main->show_all();
+
+    usleep(1e6);
+    Gui::refresh_camera_check_boxes();
+}
+
+
+void Gui::refresh_camera_check_boxes(void)
+{
+    std::cout << SYS.camera_detected[0] << " " << SYS.camera_detected[1] <<
+        " " << SYS.camera_detected[2] << std::endl;
+    if (SYS.camera_detected[0]) checkbox_cam0->set_sensitive(true);
+    else checkbox_cam0->set_sensitive(false);
+
+    if (SYS.camera_detected[1]) checkbox_cam1->set_sensitive(true);
+    else checkbox_cam1->set_sensitive(false);
+
+    if (SYS.camera_detected[2]) checkbox_cam2->set_sensitive(true);
+    else checkbox_cam2->set_sensitive(false);
 }

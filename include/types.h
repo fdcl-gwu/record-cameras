@@ -10,8 +10,8 @@ struct System
     bool record = false;
     int argc;
     char **argv;
-
-    cv::Mat im_cam0;
+    bool camera_detected[3] = {false, false, false};
+    cv::Mat im_cam0, im_cam1, im_cam2;
 };
 
 

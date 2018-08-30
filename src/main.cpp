@@ -49,17 +49,13 @@ int main(int argc, char *argv[])
     std::cout << get_time() << "starting threads .." << std::endl;
     std::thread t1(thread_gui, params);
     params.cam_num = 0; std::thread t2(thread_camera, params);
-    // params.cam_num = 1; std::thread t3(thread_camera, params);
-    // params.cam_num = 2; std::thread t4(thread_camera, params);
-    // params.cam_num = 3; std::thread t5(thread_camera, params);
-    // params.cam_num = 4; std::thread t6(thread_camera, params);
+    params.cam_num = 1; std::thread t3(thread_camera, params);
+    params.cam_num = 2; std::thread t4(thread_camera, params);
 
     t1.join();
     t2.join();
-    // t3.join();
-    // t4.join();
-    // t5.join();
-    // t6.join();
+    t3.join();
+    t4.join();
 
     std::cout << get_time() << "program closed!" << std::endl;
     return 0;

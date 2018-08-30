@@ -70,7 +70,7 @@ void Camera::show_image(void)
         if (image_in.empty()) continue;
 
         cv::cvtColor(image_in, image, CV_BGR2RGB);
-        SYS.im_cam0 = image;
+        SYS.im_cam[cam_num] = image;
         if (SYS.camera_on[cam_num])
         {
             if (SYS.record) Camera::start_recording();

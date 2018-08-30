@@ -40,7 +40,7 @@ void Gui::on_btn_record_clicked(void)
 
 bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-    cv::Mat mat1 = SYS.im_cam0;
+    cv::Mat mat1 = SYS.im_cam[0];
     if (mat1.cols < 1) return false;
 
     Gdk::Cairo::set_source_pixbuf (cr,

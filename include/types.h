@@ -11,6 +11,7 @@ struct System
     int argc;
     char **argv;
     bool camera_detected[3] = {false, false, false};
+    bool cam0_on = false, cam1_on = false, cam2_on = false;
     cv::Mat im_cam0, im_cam1, im_cam2;
 };
 

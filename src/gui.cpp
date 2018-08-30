@@ -89,16 +89,22 @@ void Gui::init(void)
     checkbox_cam0 = Gtk::manage(new Gtk::CheckButton("camera 0"));
     checkbox_cam0->set_size_request(200, 30);
     checkbox_cam0->set_sensitive(false);
+    checkbox_cam0->signal_toggled().connect(sigc::mem_fun(*this,
+                &Gui::on_cam0_toggled));
     grid_camera_data->attach(*checkbox_cam0, 0, 0, 1, 1);
 
     checkbox_cam1 = Gtk::manage(new Gtk::CheckButton("camera 1"));
     checkbox_cam1->set_size_request(200, 30);
     checkbox_cam1->set_sensitive(false);
+    checkbox_cam1->signal_toggled().connect(sigc::mem_fun(*this,
+                &Gui::on_cam1_toggled));
     grid_camera_data->attach(*checkbox_cam1, 0, 1, 1, 1);
 
     checkbox_cam2 = Gtk::manage(new Gtk::CheckButton("camera 2"));
     checkbox_cam2->set_size_request(200, 30);
     checkbox_cam2->set_sensitive(false);
+    checkbox_cam2->signal_toggled().connect(sigc::mem_fun(*this,
+                &Gui::on_cam2_toggled));
     grid_camera_data->attach(*checkbox_cam2, 0, 2, 1, 1);
 
     // level 2
@@ -150,8 +156,6 @@ void Gui::init(void)
 
 void Gui::refresh_camera_check_boxes(void)
 {
-    std::cout << SYS.camera_detected[0] << " " << SYS.camera_detected[1] <<
-        " " << SYS.camera_detected[2] << std::endl;
     if (SYS.camera_detected[0]) checkbox_cam0->set_sensitive(true);
     else checkbox_cam0->set_sensitive(false);
 
@@ -161,3 +165,61 @@ void Gui::refresh_camera_check_boxes(void)
     if (SYS.camera_detected[2]) checkbox_cam2->set_sensitive(true);
     else checkbox_cam2->set_sensitive(false);
 }
+
+
+void Gui::on_cam0_toggled(void)
+{
+    if(checkbox_cam0->get_active())
+    {
+        if (SYS.cam1_on && SYS.cam2_on)
+        {
+            statusbar->push("Only two cameras at a time", context_id);
+            SYS.cam2_on = false;
+            checkbox_cam2->set_active(false);
+        }
+        SYS.cam0_on = true;
+    }
+    else
+    {
+        SYS.cam0_on = false;
+    }
+}
+
+
+void Gui::on_cam1_toggled(void)
+{
+    if(checkbox_cam1->get_active())
+    {
+        if (SYS.cam0_on && SYS.cam2_on)
+        {
+            statusbar->push("Only two cameras at a time", context_id);
+            SYS.cam2_on = false;
+            checkbox_cam2->set_active(false);
+        }
+        SYS.cam1_on = true;
+    }
+    else
+    {
+        SYS.cam1_on = false;
+    }
+}
+
+
+void Gui::on_cam2_toggled(void)
+{
+    if(checkbox_cam2->get_active())
+    {
+        if (SYS.cam0_on && SYS.cam1_on)
+        {
+            statusbar->push("Only two cameras at a time", context_id);
+            SYS.cam1_on = false;
+            checkbox_cam1->set_active(false);
+        }
+        SYS.cam2_on = true;
+    }
+    else
+    {
+        SYS.cam2_on = false;
+    }
+}
+

@@ -42,7 +42,9 @@ private:
 
     Glib::RefPtr<Gdk::Pixbuf> m_image;
     void refresh_camera_check_boxes(void);
-
+    void on_cam0_toggled(void);
+    void on_cam1_toggled(void);
+    void on_cam2_toggled(void);
 protected:
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 };

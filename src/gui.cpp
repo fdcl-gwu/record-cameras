@@ -38,7 +38,7 @@ void Gui::on_btn_record_clicked(void)
 }
 
 
-bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+bool Gui::on_draw_0(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     cv::Mat mat;
     if (SYS.camera_on[0] && !SYS.camera_on[1] && !SYS.camera_on[2]) 
@@ -62,12 +62,38 @@ bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 }
 
 
+bool Gui::on_draw_1(const Cairo::RefPtr<Cairo::Context>& cr)
+{
+    cv::Mat mat;
+    if (SYS.camera_on[0] && SYS.camera_on[1]) mat = SYS.im_cam[1];
+    else if (SYS.camera_on[0] && SYS.camera_on[2]) mat = SYS.im_cam[2];
+    else if (SYS.camera_on[1] && SYS.camera_on[2]) mat = SYS.im_cam[2];
+    
+    if (mat.cols < 1) return false;
+
+    Gdk::Cairo::set_source_pixbuf (cr,
+            Gdk::Pixbuf::create_from_data(mat.data, Gdk::COLORSPACE_RGB,
+                false, 8, mat.cols, mat.rows, mat.step));
+    cr->paint();
+
+    return true;
+}
+
+
 bool Gui::on_timeout(void)
 {
     int h, w;
     Gui::draw_cam0->get_size_request(h, w);
-    if (h == 641) Gui::draw_cam0->set_size_request(640, 480);
-    else Gui::draw_cam0->set_size_request(641, 480);
+    if (h == 641) 
+    {
+        Gui::draw_cam0->set_size_request(640, 480);
+        Gui::draw_cam1->set_size_request(640, 480);
+    }
+    else
+    {
+        Gui::draw_cam0->set_size_request(641, 480);
+        Gui::draw_cam1->set_size_request(641, 480);
+    }
 
     return true;
 }
@@ -139,11 +165,19 @@ void Gui::init(void)
                 &Gui::on_btn_record_clicked));
     vbox_controls->pack_start(*btn_record, Gtk::PACK_SHRINK, 0);
 
+    vbox_canvas = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    vbox_canvas->set_border_width(2);
+    hbox_main->add(*vbox_canvas);
 
     draw_cam0 = Gtk::manage(new Gtk::DrawingArea);
-    draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw));
+    draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw_0));
     draw_cam0->set_size_request(640, 480);
-    hbox_main->add(*draw_cam0);
+    vbox_canvas->add(*draw_cam0);
+
+    draw_cam1 = Gtk::manage(new Gtk::DrawingArea);
+    draw_cam1->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw_1));
+    draw_cam1->set_size_request(640, 480);
+    vbox_canvas->add(*draw_cam1);
 
     // level 1
     // second child of vbox_main

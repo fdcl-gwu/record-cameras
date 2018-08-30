@@ -20,7 +20,7 @@ class Gui
 public:
     // Glib::RefPtr<Gtk::Application> app;
     Gtk::Window window;
-    Gtk::Box *vbox_main, *hbox_main, *vbox_controls;
+    Gtk::Box *vbox_main, *hbox_main, *vbox_controls, *vbox_canvas;
     Gtk::Grid *grid_camera_data;
     Gtk::Button *btn_record, *btn_pause, btn_refresh;
     Gtk::Statusbar *statusbar;
@@ -46,7 +46,8 @@ private:
     void on_cam1_toggled(void);
     void on_cam2_toggled(void);
 protected:
-    bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
+    bool on_draw_0(const Cairo::RefPtr<Cairo::Context>& cr);
+    bool on_draw_1(const Cairo::RefPtr<Cairo::Context>& cr);
 };
 
 

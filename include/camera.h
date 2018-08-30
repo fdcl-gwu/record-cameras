@@ -33,6 +33,9 @@ private:
     bool recording = false;
     bool open_new_file = true;
     std::string get_file_name(int cam_num);
+
+    void start_recording(void);
+    void end_recording(void);
 };
 
 #endif

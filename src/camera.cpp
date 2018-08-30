@@ -71,31 +71,38 @@ void Camera::show_image(void)
 
         cv::cvtColor(image_in, image, CV_BGR2RGB);
         SYS.im_cam0 = image;
-
-        if (SYS.record)
+        if (SYS.camera_on[cam_num])
         {
-            if (open_new_file)
-            {
-                std::string file_name = Camera::get_file_name(cam_num);
-                video_out.open(file_name, CV_FOURCC('M','J','P','G'),
-                    fps_in, cv::Size(frame_width, frame_height), true);
-                open_new_file = false;
-            }
-            recording = true;
-            video_out.write(image_in);
-        }
-        else
-        {
-            if (recording)
-            {
-                recording = false;
-                video_out.release();
-                open_new_file = true;
-            }
+            if (SYS.record) Camera::start_recording();
+            else Camera::end_recording();
         }
     }
 }
 
+
+void Camera::start_recording(void)
+{
+    if (open_new_file)
+    {
+        std::string file_name = Camera::get_file_name(cam_num);
+        video_out.open(file_name, CV_FOURCC('M','J','P','G'),
+                fps_in, cv::Size(frame_width, frame_height), true);
+        open_new_file = false;
+    }
+    recording = true;
+    video_out.write(image_in);
+}
+
+
+void Camera::end_recording(void)
+{
+    if (recording)
+    {
+        recording = false;
+        video_out.release();
+        open_new_file = true;
+    }
+}
 
 std::string Camera::get_file_name(int cam_num)
 {

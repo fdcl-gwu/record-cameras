@@ -22,12 +22,16 @@ void Gui::on_btn_record_clicked(void)
         SYS.record = false;
         btn_record->set_label("Record");
         std::cout << get_time() << "recording stopped" << std::endl;
+        Gui::refresh_camera_check_boxes();
         statusbar->push("Recording stopped", context_id);
     }
     else
     {
         SYS.record = true;
         btn_record->set_label("Stop");
+        checkbox_cam0->set_sensitive(false);
+        checkbox_cam1->set_sensitive(false);
+        checkbox_cam2->set_sensitive(false);
         std::cout << get_time() << "recording started" << std::endl;
         statusbar->push("Recording started", context_id);
     }

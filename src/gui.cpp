@@ -40,12 +40,22 @@ void Gui::on_btn_record_clicked(void)
 
 bool Gui::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-    cv::Mat mat1 = SYS.im_cam[0];
-    if (mat1.cols < 1) return false;
+    cv::Mat mat;
+    if (SYS.camera_on[0] && !SYS.camera_on[1] && !SYS.camera_on[2]) 
+        mat = SYS.im_cam[0];
+    else if (!SYS.camera_on[0] && SYS.camera_on[1] && !SYS.camera_on[2]) 
+        mat = SYS.im_cam[1];
+    else if (!SYS.camera_on[0] && !SYS.camera_on[1] && SYS.camera_on[2]) 
+        mat = SYS.im_cam[2];
+    else if (SYS.camera_on[0] && SYS.camera_on[1]) mat = SYS.im_cam[0];
+    else if (SYS.camera_on[0] && SYS.camera_on[2]) mat = SYS.im_cam[0];
+    else if (SYS.camera_on[1] && SYS.camera_on[2]) mat = SYS.im_cam[1];
+    
+    if (mat.cols < 1) return false;
 
     Gdk::Cairo::set_source_pixbuf (cr,
-            Gdk::Pixbuf::create_from_data(mat1.data, Gdk::COLORSPACE_RGB,
-                false, 8, mat1.cols, mat1.rows, mat1.step));
+            Gdk::Pixbuf::create_from_data(mat.data, Gdk::COLORSPACE_RGB,
+                false, 8, mat.cols, mat.rows, mat.step));
     cr->paint();
 
     return true;

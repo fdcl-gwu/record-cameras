@@ -34,6 +34,11 @@ void Camera::init(void)
                       << std::endl;
             frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
             frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+            std::cout << get_time()
+                      << "CAM" << cam_num << ": "
+                      << "frame width " << " " << frame_width << " "
+                      << "frame height " << frame_height
+                      << std::endl;
             fps_in = cap.get(CV_CAP_PROP_FPS);
             SYS.camera_detected[cam_num] = true;
         }

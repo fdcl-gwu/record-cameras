@@ -39,7 +39,8 @@ void thread_camera(Params params)
             CAM.init();
         }
     }
-    std::cout << get_time() << "CAM: thread closed!" << std::endl;
+    std::cout << get_time() << "CAM" << params.cam_num << ": thread closed!"
+              << std::endl;
 }
 
 

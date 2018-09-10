@@ -12,6 +12,7 @@ struct System
     char **argv;
     bool camera_detected[3] = {false, false, false};
     bool camera_on[3] = {false, false, false};
+    bool camera_open[3] = {false, false, false};
     bool refresh_cameras = false;
     cv::Mat im_cam[3];
 };

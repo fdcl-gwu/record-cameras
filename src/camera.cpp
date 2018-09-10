@@ -10,7 +10,11 @@ SYS(SYS_IN)
 
 Camera::~Camera()
 {
-    ;
+    if (SYS.camera_open[cam_num])
+    {
+        cap.release();
+        SYS.camera_open[cam_num] = false;
+    }
 }
 
 
@@ -42,6 +46,7 @@ void Camera::init(void)
             fps_in = cap.get(CV_CAP_PROP_FPS);
             SYS.camera_detected[cam_num] = true;
         }
+        cap.release();
     }
     catch(...)
     {
@@ -71,15 +76,32 @@ void Camera::show_image(void)
 {
     while (SYS.on)
     {
-        cap >> image_in;
-        if (image_in.empty()) continue;
-
-        cv::cvtColor(image_in, image, CV_BGR2RGB);
-        SYS.im_cam[cam_num] = image;
         if (SYS.camera_on[cam_num])
         {
+            if (!SYS.camera_open[cam_num])
+            {
+                cap.open(cam_num);
+                SYS.camera_open[cam_num] = true;
+            }
+
+            cap >> image_in;
+            if (image_in.empty()) continue;
+
+            cv::cvtColor(image_in, image, CV_BGR2RGB);
+            SYS.im_cam[cam_num] = image;
+
             if (SYS.record) Camera::start_recording();
             else Camera::end_recording();
+        }
+        else
+        {
+            if (SYS.camera_open[cam_num])
+            {
+                cap.release();
+                SYS.camera_open[cam_num] = false;
+            }
+
+            Camera::sleep();
         }
     }
 }

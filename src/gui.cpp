@@ -129,7 +129,7 @@ void Gui::init(void)
     // contains the grid that holds check_buttons and the labels for camera
     // data
     grid_camera_data = Gtk::manage(new Gtk::Grid);
-    grid_camera_data->set_size_request(100, 200);
+    grid_camera_data->set_size_request(150, 200);
     grid_camera_data->set_border_width(2);
     vbox_controls->add(*grid_camera_data);
 
@@ -154,32 +154,27 @@ void Gui::init(void)
                 &Gui::on_cam2_toggled));
     grid_camera_data->attach(*checkbox_cam2, 0, 2, 1, 1);
 
-    // level 2
-    // second child of hbox_main
-    // contains the controls
-    vbox_canvas = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-    vbox_canvas->set_size_request(100, 200);
-    vbox_canvas->set_border_width(2);
-    hbox_main->add(*vbox_canvas);
-    vbox_controls->grab_focus();
-
     // level 3
-    // first child of vbox_controls
-    // start/stop recording
+    // second child of vbox_controls
     btn_record = Gtk::manage(new Gtk::Button("Record"));
     btn_record->set_size_request(100, 100);
     btn_record->signal_clicked().connect(sigc::mem_fun(*this,
                 &Gui::on_btn_record_clicked));
     vbox_controls->add(*btn_record);
+    vbox_controls->grab_focus();
 
+    // level 2
+    // second child of hbox_main
+    // contains the drawing canvases
     vbox_canvas = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    vbox_canvas->set_size_request(100, 200);
     vbox_canvas->set_border_width(2);
     hbox_main->add(*vbox_canvas);
 
     draw_cam0 = Gtk::manage(new Gtk::DrawingArea);
     draw_cam0->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw_0));
     draw_cam0->set_size_request(640, 480);
-    vbox_canvas->add(*draw_cam0);
+    vbox_canvas->pack_start(*draw_cam0, Gtk::PACK_SHRINK, 2);
 
     draw_cam1 = Gtk::manage(new Gtk::DrawingArea);
     draw_cam1->signal_draw().connect(sigc::mem_fun(*this, &Gui::on_draw_1));

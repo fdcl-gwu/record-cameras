@@ -21,20 +21,37 @@ void Gui::on_btn_record_clicked(void)
     {
         SYS.record = false;
         btn_record->set_image_from_icon_name("media-record");
+        btn_record->set_tooltip_text("Start recording the video");
         std::cout << get_time() << "recording stopped" << std::endl;
         Gui::refresh_camera_check_boxes();
+        btn_refresh->set_sensitive(true);
         statusbar->push("Recording stopped", context_id);
     }
     else
     {
         SYS.record = true;
         btn_record->set_image_from_icon_name("media-playback-stop");
+        btn_record->set_tooltip_text("Stop recording the video");
         checkbox_cam0->set_sensitive(false);
         checkbox_cam1->set_sensitive(false);
         checkbox_cam2->set_sensitive(false);
+        btn_refresh->set_sensitive(false);
         std::cout << get_time() << "recording started" << std::endl;
         statusbar->push("Recording started", context_id);
     }
+}
+
+
+void Gui::on_btn_refresh_clicked(void)
+{
+    statusbar->push("Refreshing cameras ..", context_id);
+    checkbox_cam0->set_sensitive(false);
+    checkbox_cam1->set_sensitive(false);
+    checkbox_cam2->set_sensitive(false);
+    btn_record->set_sensitive(false);
+    Gui::refresh_camera_check_boxes();
+    btn_record->set_sensitive(true);
+    statusbar->push("Camera refresh completed", context_id);
 }
 
 
@@ -158,11 +175,23 @@ void Gui::init(void)
     // second child of vbox_controls
     btn_record = Gtk::manage(new Gtk::Button());
     btn_record->set_image_from_icon_name("media-record");
+    btn_record->set_tooltip_text("Start recording the video");
     btn_record->set_size_request(100, 100);
     btn_record->signal_clicked().connect(sigc::mem_fun(*this,
                 &Gui::on_btn_record_clicked));
     vbox_controls->add(*btn_record);
     vbox_controls->grab_focus();
+
+
+    // level 3
+    // third child of vbox_controls
+    btn_refresh = Gtk::manage(new Gtk::Button());
+    btn_refresh->set_image_from_icon_name("view-refresh");
+    btn_refresh->set_size_request(100, 30);
+    btn_refresh->set_tooltip_text("Recheck for hardware changes");
+    btn_refresh->signal_clicked().connect(sigc::mem_fun(*this,
+                &Gui::on_btn_refresh_clicked));
+    vbox_controls->add(*btn_refresh);
 
     // level 2
     // second child of hbox_main

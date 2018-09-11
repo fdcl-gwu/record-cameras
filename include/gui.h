@@ -22,7 +22,7 @@ public:
     Gtk::Window window;
     Gtk::Box *vbox_main, *hbox_main, *vbox_controls, *vbox_canvas;
     Gtk::Grid *grid_camera_data;
-    Gtk::Button *btn_record, *btn_pause, btn_refresh;
+    Gtk::Button *btn_record, *btn_pause, *btn_refresh;
     Gtk::Statusbar *statusbar;
     Gtk::CheckButton *checkbox_cam0, *checkbox_cam1, *checkbox_cam2;
     Gtk::DrawingArea *draw_cam0, *draw_cam1;
@@ -35,6 +35,7 @@ public:
 private:
     void init(void);
     void on_btn_record_clicked(void);
+    void on_btn_refresh_clicked(void);
     bool on_timeout(void);
 
     std::string t_now;

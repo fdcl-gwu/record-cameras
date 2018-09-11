@@ -1,3 +1,12 @@
+# Record-Cameras
+
+This is a simple GUI for recording inputs from different cameras.
+
+## Contents
+1. [Dependencies](#dependencies)
+2. [Building](#building)
+3. [Configuring](#configuring)
+
 ## Dependencies
 
 ### CMake
@@ -62,7 +71,7 @@ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libp
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
 
-# if you need a specific version, you should checkout to that version on 
+# if you need a specific version, you should checkout to that version on
 # both repositories before executing the below commands
 
 mkdir build && cd build
@@ -71,3 +80,23 @@ make -j4  # if you have more cores on your computer, substitute 4 with the numbe
           # use command "nproc" to find the number fo cores
 sudo make install
 ```
+
+
+## Building
+
+Make sure you install all the dependencies, and execute the below commands.
+```
+cd record-cameras
+mkdir build && cd build
+cmake ../
+make
+```
+
+
+## Configuring
+
+After building, you can make a shortcut so that the GUI can be open easily from somewhere else.
+1. Copy the `Record Cameras.desktop` file to place where you want to make a shortcut.
+1. Open the `Record Cameras.desktop` and edit `Exec` and `Icon` paths to match yours based on where you cloned the files
+1. Make this copied file an executable: `sudo chmod +x Record\ Cameras.desktop`
+1. Now, if you double click the file, it should open the GUI.

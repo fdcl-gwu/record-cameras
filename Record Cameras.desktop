@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/fdcl/Documents/record-cameras/build/record_cameras
+Name=Record Cameras
+Icon=/home/fdcl/Documents/record-cameras/record-cameras.png

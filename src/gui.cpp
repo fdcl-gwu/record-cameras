@@ -20,7 +20,7 @@ void Gui::on_btn_record_clicked(void)
     if (SYS.record)
     {
         SYS.record = false;
-        btn_record->set_label("Record");
+        btn_record->set_image_from_icon_name("media-record");
         std::cout << get_time() << "recording stopped" << std::endl;
         Gui::refresh_camera_check_boxes();
         statusbar->push("Recording stopped", context_id);
@@ -28,7 +28,7 @@ void Gui::on_btn_record_clicked(void)
     else
     {
         SYS.record = true;
-        btn_record->set_label("Stop");
+        btn_record->set_image_from_icon_name("media-playback-stop");
         checkbox_cam0->set_sensitive(false);
         checkbox_cam1->set_sensitive(false);
         checkbox_cam2->set_sensitive(false);
@@ -122,7 +122,7 @@ void Gui::init(void)
     // contains the vbox_controls
     vbox_controls = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 2));
     vbox_controls->set_size_request(100, 200);
-    hbox_main->pack_start(*vbox_controls, Gtk::PACK_SHRINK, 0);
+    hbox_main->pack_start(*vbox_controls, Gtk::PACK_SHRINK, 2);
 
     // level 3
     // first child of vbox_controls
@@ -156,7 +156,8 @@ void Gui::init(void)
 
     // level 3
     // second child of vbox_controls
-    btn_record = Gtk::manage(new Gtk::Button("Record"));
+    btn_record = Gtk::manage(new Gtk::Button());
+    btn_record->set_image_from_icon_name("media-record");
     btn_record->set_size_request(100, 100);
     btn_record->signal_clicked().connect(sigc::mem_fun(*this,
                 &Gui::on_btn_record_clicked));

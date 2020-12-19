@@ -30,8 +30,8 @@ void Camera::init(void)
 
     try
     {
-        cap.open(cam_num);
-        if (cap.isOpened())
+        bool ret = cap.open(cam_num);
+        if (ret && cap.isOpened())
         {
             camera_detected = true;
             std::cout << get_time() << "CAM" << cam_num << ": camera detected"
@@ -46,7 +46,11 @@ void Camera::init(void)
             fps_in = cap.get(CV_CAP_PROP_FPS);
             SYS.camera_detected[cam_num] = true;
         }
-        cap.release();
+
+        if (ret)
+        {
+            cap.release();
+        }
     }
     catch(...)
     {
@@ -54,7 +58,6 @@ void Camera::init(void)
         std::cout << get_time() << "CAM" << cam_num << ": camera not detected"
                   << std::endl;
         SYS.camera_detected[cam_num] = false;
-
     }
 }
 

@@ -9,7 +9,7 @@ Gui::Gui(System &SYS_IN) : SYS(SYS_IN)
 
 Gui::~Gui()
 {
-    std::cout << get_time() << " GUI: setting system off .."
+    std::cout << get_time() << "GUI: setting system off .."
               << std::endl;
     SYS.on = false;
 }
@@ -59,14 +59,29 @@ bool Gui::on_draw_0(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     cv::Mat mat;
     if (SYS.camera_on[0] && !SYS.camera_on[1] && !SYS.camera_on[2])
+    {
         mat = SYS.im_cam[0];
+    }
     else if (!SYS.camera_on[0] && SYS.camera_on[1] && !SYS.camera_on[2])
+    {
         mat = SYS.im_cam[1];
+    }
     else if (!SYS.camera_on[0] && !SYS.camera_on[1] && SYS.camera_on[2])
+    {
         mat = SYS.im_cam[2];
-    else if (SYS.camera_on[0] && SYS.camera_on[1]) mat = SYS.im_cam[0];
-    else if (SYS.camera_on[0] && SYS.camera_on[2]) mat = SYS.im_cam[0];
-    else if (SYS.camera_on[1] && SYS.camera_on[2]) mat = SYS.im_cam[1];
+    }
+    else if (SYS.camera_on[0] && SYS.camera_on[1]) 
+    {
+        mat = SYS.im_cam[0];
+    }
+    else if (SYS.camera_on[0] && SYS.camera_on[2]) 
+    {
+        mat = SYS.im_cam[0];
+    }
+    else if (SYS.camera_on[1] && SYS.camera_on[2]) 
+    {
+        mat = SYS.im_cam[1];
+    }
 
     if (mat.cols < 1) return false;
 
@@ -82,9 +97,18 @@ bool Gui::on_draw_0(const Cairo::RefPtr<Cairo::Context>& cr)
 bool Gui::on_draw_1(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     cv::Mat mat;
-    if (SYS.camera_on[0] && SYS.camera_on[1]) mat = SYS.im_cam[1];
-    else if (SYS.camera_on[0] && SYS.camera_on[2]) mat = SYS.im_cam[2];
-    else if (SYS.camera_on[1] && SYS.camera_on[2]) mat = SYS.im_cam[2];
+    if (SYS.camera_on[0] && SYS.camera_on[1]) 
+    {
+        mat = SYS.im_cam[1];
+    }
+    else if (SYS.camera_on[0] && SYS.camera_on[2]) 
+    {
+        mat = SYS.im_cam[2];
+    }
+    else if (SYS.camera_on[1] && SYS.camera_on[2]) 
+    {
+        mat = SYS.im_cam[2];
+    }
 
     if (mat.cols < 1) return false;
 
@@ -97,24 +121,33 @@ bool Gui::on_draw_1(const Cairo::RefPtr<Cairo::Context>& cr)
 }
 
 
-bool Gui::on_timeout(void)
+bool Gui::update(void)
 {
-    int h, w;
-    Gui::draw_cam0->get_size_request(h, w);
-    if (h == 641)
-    {
-        Gui::draw_cam0->set_size_request(640, 480);
-        Gui::draw_cam1->set_size_request(640, 480);
-    }
-    else
-    {
-        Gui::draw_cam0->set_size_request(641, 480);
-        Gui::draw_cam1->set_size_request(641, 480);
-    }
+    Gui::draw_cam0->queue_draw();
+    Gui::draw_cam1->queue_draw();
 
+    if (!SYS.on)
+    {
+        std::cout << "GUI: closing window .." << std::endl;
+        app->quit();
+    }
+    usleep(100);
     return true;
 }
 
+
+bool Gui::quit_program(GdkEventAny* event)
+{
+    SYS.on = false;
+    return true;
+}
+
+
+void Gui::run(void)
+{
+    std::cout << "GUI: drawing window .." << std::endl;
+    app->run(window);
+}
 
 
 void Gui::init(void)
@@ -220,9 +253,9 @@ void Gui::init(void)
     statusbar->push("Click Record to start recording", context_id);
     context_id++;
 
-    int timeout_value = 40; //in ms
-    sigc::slot<bool>my_slot = sigc::mem_fun(*this, &Gui::on_timeout);
-    Glib::signal_timeout().connect(my_slot, timeout_value);
+    // int timeout_value = 40; //in ms
+    // sigc::slot<bool>my_slot = sigc::mem_fun(*this, &Gui::on_timeout);
+    // Glib::signal_timeout().connect(my_slot, timeout_value);
 
     vbox_main->set_focus_child(*hbox_main);
     hbox_main->set_focus_child(*vbox_controls);
@@ -230,6 +263,11 @@ void Gui::init(void)
     vbox_main->show_all();
 
     Gui::refresh_camera_check_boxes();
+
+    Glib::signal_idle().connect(sigc::mem_fun(*this, &Gui::update));
+
+    window.signal_delete_event().connect(sigc::mem_fun(*this, \
+        &Gui::quit_program));
 }
 
 

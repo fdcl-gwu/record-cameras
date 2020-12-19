@@ -18,7 +18,7 @@
 class Gui
 {
 public:
-    // Glib::RefPtr<Gtk::Application> app;
+    Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
     Gtk::Window window;
     Gtk::Box *vbox_main, *hbox_main, *vbox_controls, *vbox_canvas;
     Gtk::Grid *grid_camera_data;
@@ -30,13 +30,15 @@ public:
     Gui(
             System &SYS_IN
     );
-    ~Gui();
+    ~Gui(void);
+    void run(void);
 
 private:
     void init(void);
     void on_btn_record_clicked(void);
     void on_btn_refresh_clicked(void);
-    bool on_timeout(void);
+    bool update(void);
+    bool quit_program(GdkEventAny *event);
 
     std::string t_now;
     unsigned int context_id;

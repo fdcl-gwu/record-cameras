@@ -1,6 +1,12 @@
 # Record-Cameras
 
-This is a simple GUI for recording inputs from different cameras.
+This is a simple GUI for recording inputs from different cameras, using OpenCV with C++.
+
+Features:
+* Can record and save from upto two connected cameras, simulataneously.
+* Refresh button detects the hardware changes (plugging-in another camera).
+
+![Screenshot](screenshot.png)
 
 ## Contents
 1. [Dependencies](#dependencies)
@@ -15,10 +21,9 @@ On Linux:
 sudo apt-get install build-essential pkg-config cmake
 ```
 
-On Mac:
+On Mac (with [Homebrew](https://brew.sh/) installed):
 ```
 brew install cmake
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 ```
 
 
@@ -28,18 +33,13 @@ Glade is used for the GUI. On Linux:
 sudo apt-get install glade libgtkmm-3.0-dev
 ```
 
-On Mac (with [Homebrew](https://brew.sh/) installed)
+On Mac:
 ```
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 brew install gtkmm3
 brew install glade
 ```
 
 ### OpenCV
-
-You can install the standalone ArUco library by downloading the source files which can be found in the above website and building and installing them.
-But it is highly recommended to install ArUco library packed in OpenCV library.
-The instruction below are for installing OpenCV with ArUco library.
 
 You can install OpenCV using the master branch of their repository, **OR** using the submodules added to this repository.
 Building and installing OpenCV with the provided submodules guarantees that the other codes on this repository works without issues.
@@ -57,7 +57,7 @@ cd libraries/opencv
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules ..
 make -j4  # if you have more/less cores on your computer, substitute 4 with the number of cores
-          # use command "nproc" to find the number fo cores
+          # use command "nproc" to find the number of cores
 sudo make install
 ```
 
@@ -77,7 +77,7 @@ git clone https://github.com/opencv/opencv_contrib.git
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules ..
 make -j4  # if you have more cores on your computer, substitute 4 with the number of cores
-          # use command "nproc" to find the number fo cores
+          # use command "nproc" to find the number of cores
 sudo make install
 ```
 
@@ -99,4 +99,4 @@ After building, you can make a shortcut so that the GUI can be open easily from 
 1. Copy the `Record Cameras.desktop` file to place where you want to make a shortcut.
 1. Open the `Record Cameras.desktop` and edit `Exec` and `Icon` paths to match yours based on where you cloned the files
 1. Make this copied file an executable: `sudo chmod +x Record\ Cameras.desktop`
-1. Now, if you double click the file, it should open the GUI.
+1. Now, when you double click the file, it should open the GUI.
